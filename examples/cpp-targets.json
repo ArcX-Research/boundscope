@@ -1,0 +1,23 @@
+{
+  "schema": "boundscope.targets.v1",
+  "compiler": "/usr/bin/clang",
+  "targets": [
+    {
+      "id": "lifetime-demo",
+      "root": ".",
+      "language": "cpp",
+      "sources": ["cpp/lifetime.cpp"],
+      "headers": [],
+      "include_dirs": [],
+      "cases": [
+        {"id": "live-owner", "args": ["keep-alive"], "stdin": ""},
+        {"id": "released-owner", "args": ["release-early"], "stdin": ""}
+      ],
+      "limits": {
+        "build_timeout_ms": 30000,
+        "test_timeout_ms": 5000,
+        "output_bytes": 65536
+      }
+    }
+  ]
+}

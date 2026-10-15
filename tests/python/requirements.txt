@@ -1,0 +1,2 @@
+# Test-only official MCP SDK; the binaries do not depend on Python.
+mcp==2.2.0

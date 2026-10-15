@@ -1,0 +1,27 @@
+[package]
+name = "boundscope"
+version = "0.1.0"
+edition = "2024"
+rust-version = "1.85"
+license = "MIT"
+description = "Reproducible sanitizer checks for registered C and C++ programs"
+
+[dependencies]
+clap = { version = "4.5", features = ["derive"] }
+ctrlc = { version = "3.5", features = ["termination"] }
+libc = "0.2"
+serde = { version = "1", features = ["derive"] }
+serde_json = "1"
+sha2 = "0.10"
+tempfile = "3"
+
+[profile.release]
+overflow-checks = true
+
+[[bin]]
+name = "boundscope"
+path = "src/bin/boundscope.rs"
+
+[[bin]]
+name = "boundscope-mcp"
+path = "src/bin/boundscope-mcp.rs"

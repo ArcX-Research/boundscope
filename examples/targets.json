@@ -1,0 +1,23 @@
+{
+  "schema": "boundscope.targets.v1",
+  "compiler": "/usr/bin/clang",
+  "targets": [
+    {
+      "id": "buffer-demo",
+      "root": ".",
+      "language": "c",
+      "sources": ["c/buffer.c"],
+      "headers": [],
+      "include_dirs": [],
+      "cases": [
+        {"id": "within-bounds", "args": ["3"], "stdin": ""},
+        {"id": "boundary", "args": ["4"], "stdin": ""}
+      ],
+      "limits": {
+        "build_timeout_ms": 30000,
+        "test_timeout_ms": 5000,
+        "output_bytes": 65536
+      }
+    }
+  ]
+}

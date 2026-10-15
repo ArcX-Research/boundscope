@@ -1,0 +1,7 @@
+/target/
+/build/
+/local/
+/.venv/
+*.dSYM/
+__pycache__/
+.DS_Store
