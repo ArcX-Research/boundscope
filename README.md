@@ -3,6 +3,8 @@
 Boundscope is a local testing tool for C and C++ programs. It finds memory errors,
 saves the evidence, and retests fixes. Use it from a terminal or an AI agent.
 
+![Recorded execution, timing, and the buffer overflow linked to its source.](assets/buffer-execution.svg)
+
 ## Get started
 
 You need Rust/Cargo 1.85+ and Clang with AddressSanitizer (ASan) and
@@ -35,13 +37,14 @@ This refuses to overwrite an existing demo. The configurations use
 Run its two test cases:
 
 ```sh
-target/debug/boundscope --config build/readme-demo/targets.json --store build/readme-demo/reports check buffer-demo
+target/debug/boundscope \
+  --config build/readme-demo/targets.json \
+  --store build/readme-demo/reports \
+  check buffer-demo
 ```
 
-| Input | Result |
-| --- | --- |
-| `3` | Valid write; no error observed. |
-| `4` | `heap-buffer-overflow` at `buffer.c:13`. |
+- **Input `3`:** Valid write; no error observed.
+- **Input `4`:** Writes past the buffer at `buffer.c:13`.
 
 The finding appears in the JSON output:
 
@@ -66,7 +69,10 @@ Fix the boundary check in `build/readme-demo/c/buffer.c`:
 Retest the same inputs:
 
 ```sh
-target/debug/boundscope --config build/readme-demo/targets.json --store build/readme-demo/reports retest BASELINE_ID
+target/debug/boundscope \
+  --config build/readme-demo/targets.json \
+  --store build/readme-demo/reports \
+  retest BASELINE_ID
 ```
 
 Expect `no_errors_observed` and exit code **0**. The new report links to the
@@ -78,7 +84,10 @@ original finding and preserves its source and inputs.
 through a pointer to it. Run both cases:
 
 ```sh
-target/debug/boundscope --config build/readme-demo/cpp-targets.json --store build/readme-demo/reports check lifetime-demo
+target/debug/boundscope \
+  --config build/readme-demo/cpp-targets.json \
+  --store build/readme-demo/reports \
+  check lifetime-demo
 ```
 
 `keep-alive` finishes cleanly; `release-early` produces `heap-use-after-free`
@@ -95,7 +104,10 @@ In `build/readme-demo/cpp/lifetime.cpp`, move the release after the read:
 Retest the fix:
 
 ```sh
-target/debug/boundscope --config build/readme-demo/cpp-targets.json --store build/readme-demo/reports retest CPP_BASELINE_ID
+target/debug/boundscope \
+  --config build/readme-demo/cpp-targets.json \
+  --store build/readme-demo/reports \
+  retest CPP_BASELINE_ID
 ```
 
 Expect both cases to finish cleanly and exit code **0**.
@@ -113,10 +125,6 @@ The trace shows execution phases, timing, and why each process stopped:
 ```sh
 target/debug/boundscope --store build/readme-demo/reports trace BASELINE_ID
 ```
-
-Here is a recorded run of the buffer example:
-
-![Recorded execution, timing, and the buffer overflow linked to its source.](assets/buffer-execution.svg)
 
 `complete` means the checks finished; `findings_observed` means they found an error.
 A case can also fail or stop before finishing:
