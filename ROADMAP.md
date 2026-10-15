@@ -13,7 +13,7 @@
   copying sensitive test payloads into the trace.
 
 Locally verified on macOS arm64. Linux and hosted CI verification remain pending;
-see [verification](docs/VERIFICATION.md). This is an initial development version.
+this is an initial development version.
 
 ## 2. Existing project builds
 
